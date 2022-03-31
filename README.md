@@ -15,9 +15,9 @@ first, this is partly translated with google translate.
 8. Once done, it's time to start the CrackApplier IDE
 
 ### CrackApplier IDE
-1. Start CrackApplier
-2. Enter the required data.
-    -Program name: It is the name of the program itself. What program is the patch aimed at?
+1. Start CrackApplier IDE
+2. Enter the required data
+    - Program name: It is the name of the program itself. What program is the patch aimed at?
     - Crack name: The name of the crack. As you, as a hacker, you have put the file patched / cracked.
     - Cracked file: The name of the file that has been patched/cracked.
     - Crack type: The type of crack. Example: License, Password, etc.
