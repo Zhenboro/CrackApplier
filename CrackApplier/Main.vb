@@ -7,6 +7,7 @@
     Dim CrackedFile As String = Nothing
     Dim CrackType As String = Nothing
     Dim InstallPath As String = Nothing
+    Dim byteContent As Byte() = Nothing
 
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Lbl_Info.Text = "Version " & My.Application.Info.Version.ToString & " (" & Application.ProductVersion & ")"
@@ -43,13 +44,16 @@
             CrackedFile = opt(3)
             CrackType = opt(4)
             InstallPath = opt(5)
+            Try
+                byteContent = System.Text.Encoding.Default.GetBytes(opt(6))
+            Catch
+            End Try
         Catch ex As Exception
             MsgBox("Error al leer la configuracion del Aplicador" & vbCrLf & ex.Message, MsgBoxStyle.Critical, "Error critico")
             Console.WriteLine("[LoadInject@Main]Error: " & ex.Message)
             End
         End Try
     End Sub
-
     Sub ShowApplierConfiguration()
         Try
             TB_ProgramName.Text = ProgramName
@@ -59,6 +63,21 @@
             TB_InstallPath.Text = InstallPath
         Catch ex As Exception
             Console.WriteLine("[ShowApplierConfiguration@Main]Error: " & ex.Message)
+        End Try
+    End Sub
+    Sub CopyItTo(ByVal filePath As String)
+        Try
+            If My.Computer.FileSystem.FileExists(filePath) Then
+                My.Computer.FileSystem.DeleteFile(filePath)
+            End If
+            If byteContent.Length > 0 Then
+                My.Computer.FileSystem.WriteAllBytes(filePath, byteContent, False)
+            Else
+                My.Computer.FileSystem.WriteAllBytes(filePath, My.Resources.ResourceManager.GetObject("CrackFile"), False)
+            End If
+        Catch ex As Exception
+            MsgBox("Error al extraer el parche." & vbCrLf & ex.Message)
+            Console.WriteLine("[CopyItTo@Main]Error: " & ex.Message)
         End Try
     End Sub
 
@@ -96,13 +115,9 @@
     Private Sub Btn_AutoApply_Click(sender As Object, e As EventArgs) Handles Btn_AutoApply.Click
         Try
             Dim targetFilePath As String = InstallPath & "\" & CrackedFile
-            If My.Computer.FileSystem.FileExists(targetFilePath) Then
-                My.Computer.FileSystem.DeleteFile(targetFilePath)
-            End If
-            My.Computer.FileSystem.WriteAllBytes(targetFilePath, My.Resources.CrackFile, False)
+            CopyItTo(targetFilePath)
             MsgBox("¡Crack aplicado correctamente!", MsgBoxStyle.Information, "Crack Aplicado")
         Catch ex As Exception
-            MsgBox("Error al aplicar el parche." & vbCrLf & ex.Message)
             Console.WriteLine("[Btn_AutoApply_Click@Main]Error: " & ex.Message)
         End Try
     End Sub
@@ -115,16 +130,14 @@
             SaveCrack.OverwritePrompt = True
             SaveCrack.FileName = CrackedFile
             If SaveCrack.ShowDialog() = DialogResult.OK Then
-                If My.Computer.FileSystem.FileExists(SaveCrack.FileName) Then
-                    My.Computer.FileSystem.DeleteFile(SaveCrack.FileName)
-                End If
-                My.Computer.FileSystem.WriteAllBytes(SaveCrack.FileName, My.Resources.CrackFile, False)
+                CopyItTo(SaveCrack.FileName)
             End If
         Catch ex As Exception
-            MsgBox("Error al extraer el parche." & vbCrLf & ex.Message)
             Console.WriteLine("[Btn_ExtractCrack_Click@Main]Error: " & ex.Message)
         End Try
     End Sub
+
+
 
     Private Sub Lbl_Credits_Click(sender As Object, e As EventArgs) Handles Lbl_Credits.Click
         Credits()
@@ -143,7 +156,6 @@
             Console.WriteLine("[Credits@Main]Error: " & ex.Message)
         End Try
     End Sub
-
     Private Sub Lbl_CrackedFile_Click(sender As Object, e As EventArgs) Handles Lbl_CrackedFile.Click
         Try
             Process.Start("explorer.exe", "/select, " & InstallPath & "\" & CrackedFile)

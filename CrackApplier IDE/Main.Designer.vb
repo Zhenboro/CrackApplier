@@ -38,6 +38,7 @@ Partial Class Main
         Me.TB_ProgramName = New System.Windows.Forms.TextBox()
         Me.GB_Options = New System.Windows.Forms.GroupBox()
         Me.Btn_Create = New System.Windows.Forms.Button()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.GB_Info.SuspendLayout()
         Me.GB_Options.SuspendLayout()
         Me.SuspendLayout()
@@ -72,6 +73,7 @@ Partial Class Main
         '
         'GB_Info
         '
+        Me.GB_Info.Controls.Add(Me.CheckBox1)
         Me.GB_Info.Controls.Add(Me.Lbl_InstallPath)
         Me.GB_Info.Controls.Add(Me.TB_InstallPath)
         Me.GB_Info.Controls.Add(Me.Lbl_CrackType)
@@ -197,6 +199,16 @@ Partial Class Main
         Me.Btn_Create.Text = "Create CrackApplier"
         Me.Btn_Create.UseVisualStyleBackColor = True
         '
+        'CheckBox1
+        '
+        Me.CheckBox1.AutoSize = True
+        Me.CheckBox1.Location = New System.Drawing.Point(213, 156)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(58, 17)
+        Me.CheckBox1.TabIndex = 81
+        Me.CheckBox1.Text = "Inject?"
+        Me.CheckBox1.UseVisualStyleBackColor = True
+        '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -236,4 +248,5 @@ Partial Class Main
     Friend WithEvents TB_ProgramName As TextBox
     Friend WithEvents GB_Options As GroupBox
     Friend WithEvents Btn_Create As Button
+    Friend WithEvents CheckBox1 As CheckBox
 End Class

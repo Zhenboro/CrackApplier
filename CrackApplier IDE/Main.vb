@@ -29,6 +29,7 @@ Public Class Main
                 OpenBinary.Filter = "Executable file (*.exe)|*.exe"
                 OpenBinary.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
                 OpenBinary.Title = "Abrir binario..."
+                OpenBinary.FileName = "CrackApplier.exe"
                 If OpenBinary.ShowDialog() = DialogResult.OK Then
                     Dim Temp As String = Nothing
                     Dim SaveBinary As New SaveFileDialog
@@ -36,7 +37,7 @@ Public Class Main
                     SaveBinary.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
                     SaveBinary.Title = "Guardar binario..."
                     SaveBinary.OverwritePrompt = True
-                    SaveBinary.FileName = "CrackApplier.exe"
+                    SaveBinary.FileName = "CrackApplier for " & CrackName & ".exe"
                     If SaveBinary.ShowDialog() = DialogResult.OK Then
                         Temp = SaveBinary.FileName
                     End If
@@ -49,9 +50,20 @@ Public Class Main
                     FileGet(1, stub)
                     FileClose(1)
                     FileOpen(1, Temp, OpenMode.Binary, OpenAccess.ReadWrite, OpenShare.Default)
-                    FilePut(1, stub & FS1 & ProgramName & FS1 & CrackName & FS1 & CrackedFile & FS1 & CrackType & FS1 & InstallPath & FS1)
+                    If CheckBox1.Checked Then
+                        Dim openCrackFile As New OpenFileDialog
+                        openCrackFile.Filter = "All file types(*.*)|*.*"
+                        openCrackFile.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+                        openCrackFile.Title = "Abrir parche..."
+                        If openCrackFile.ShowDialog() = DialogResult.OK Then
+                            Dim Content As Byte() = My.Computer.FileSystem.ReadAllBytes(openCrackFile.FileName)
+                            FilePut(1, stub & FS1 & ProgramName & FS1 & CrackName & FS1 & CrackedFile & FS1 & CrackType & FS1 & InstallPath & FS1 & System.Text.Encoding.Default.GetString(Content) & FS1)
+                        End If
+                    Else
+                        FilePut(1, stub & FS1 & ProgramName & FS1 & CrackName & FS1 & CrackedFile & FS1 & CrackType & FS1 & InstallPath & FS1)
+                    End If
                     FileClose(1)
-                    MsgBox("¡CrackApplier creado correctamente!")
+                    MsgBox("¡CrackApplier creado correctamente!", MsgBoxStyle.Information, "Creacion de Aplicador")
                 End If
             End If
         Catch ex As Exception
