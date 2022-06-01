@@ -11,18 +11,19 @@ Public Class Main
 
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Lbl_Info.Text = "Version " & My.Application.Info.Version.ToString & " (" & Application.ProductVersion & ")"
+        AddTypes()
     End Sub
 
     Private Sub Btn_Create_Click(sender As Object, e As EventArgs) Handles Btn_Create.Click
         Try
-            If TB_ProgramName.Text = Nothing Or TB_CrackName.Text = Nothing Or TB_CrackedFile.Text = Nothing Or TB_CrackType.Text = Nothing Or TB_InstallPath.Text = Nothing Then
+            If TB_ProgramName.Text = Nothing Or TB_CrackName.Text = Nothing Or TB_CrackedFile.Text = Nothing Or CB_CrackType.Text = Nothing Or TB_InstallPath.Text = Nothing Then
                 MsgBox("No puede dejar informacion vacia", MsgBoxStyle.Critical, "Aplicar configuracion")
             Else
 
                 ProgramName = TB_ProgramName.Text
                 CrackName = TB_CrackName.Text
                 CrackedFile = TB_CrackedFile.Text
-                CrackType = TB_CrackType.Text
+                CrackType = CB_CrackType.Text
                 InstallPath = TB_InstallPath.Text
 
                 Dim OpenBinary As New OpenFileDialog
@@ -69,6 +70,19 @@ Public Class Main
         Catch ex As Exception
             MsgBox("Error al crear el Aplicador" & vbCrLf & ex.Message, MsgBoxStyle.Critical, "Error critico")
             Console.WriteLine("[Btn_Create_Click@Main]Error: " & ex.Message)
+        End Try
+    End Sub
+
+    Sub AddTypes()
+        Try
+            CB_CrackType.Items.Add("Licence")
+            CB_CrackType.Items.Add("Password")
+            CB_CrackType.Items.Add("ByPass")
+            CB_CrackType.Items.Add("Auth")
+            CB_CrackType.Items.Add("Code/Serial")
+            CB_CrackType.Items.Add("Crack")
+        Catch ex As Exception
+            Console.WriteLine("[AddTypes@Main]Error: " & ex.Message)
         End Try
     End Sub
 End Class

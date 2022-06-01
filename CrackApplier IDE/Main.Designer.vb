@@ -26,10 +26,10 @@ Partial Class Main
         Me.Lbl_Info = New System.Windows.Forms.Label()
         Me.Lbl_Credits = New System.Windows.Forms.Label()
         Me.GB_Info = New System.Windows.Forms.GroupBox()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.Lbl_InstallPath = New System.Windows.Forms.Label()
         Me.TB_InstallPath = New System.Windows.Forms.TextBox()
         Me.Lbl_CrackType = New System.Windows.Forms.Label()
-        Me.TB_CrackType = New System.Windows.Forms.TextBox()
         Me.Lbl_CrackedFile = New System.Windows.Forms.Label()
         Me.TB_CrackedFile = New System.Windows.Forms.TextBox()
         Me.Lbl_CrackName = New System.Windows.Forms.Label()
@@ -38,7 +38,7 @@ Partial Class Main
         Me.TB_ProgramName = New System.Windows.Forms.TextBox()
         Me.GB_Options = New System.Windows.Forms.GroupBox()
         Me.Btn_Create = New System.Windows.Forms.Button()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.CB_CrackType = New System.Windows.Forms.ComboBox()
         Me.GB_Info.SuspendLayout()
         Me.GB_Options.SuspendLayout()
         Me.SuspendLayout()
@@ -73,11 +73,11 @@ Partial Class Main
         '
         'GB_Info
         '
+        Me.GB_Info.Controls.Add(Me.CB_CrackType)
         Me.GB_Info.Controls.Add(Me.CheckBox1)
         Me.GB_Info.Controls.Add(Me.Lbl_InstallPath)
         Me.GB_Info.Controls.Add(Me.TB_InstallPath)
         Me.GB_Info.Controls.Add(Me.Lbl_CrackType)
-        Me.GB_Info.Controls.Add(Me.TB_CrackType)
         Me.GB_Info.Controls.Add(Me.Lbl_CrackedFile)
         Me.GB_Info.Controls.Add(Me.TB_CrackedFile)
         Me.GB_Info.Controls.Add(Me.Lbl_CrackName)
@@ -89,6 +89,16 @@ Partial Class Main
         Me.GB_Info.Size = New System.Drawing.Size(484, 179)
         Me.GB_Info.TabIndex = 20
         Me.GB_Info.TabStop = False
+        '
+        'CheckBox1
+        '
+        Me.CheckBox1.AutoSize = True
+        Me.CheckBox1.Location = New System.Drawing.Point(213, 156)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(58, 17)
+        Me.CheckBox1.TabIndex = 81
+        Me.CheckBox1.Text = "Inject?"
+        Me.CheckBox1.UseVisualStyleBackColor = True
         '
         'Lbl_InstallPath
         '
@@ -117,14 +127,6 @@ Partial Class Main
         Me.Lbl_CrackType.Size = New System.Drawing.Size(61, 13)
         Me.Lbl_CrackType.TabIndex = 70
         Me.Lbl_CrackType.Text = "Crack type:"
-        '
-        'TB_CrackType
-        '
-        Me.TB_CrackType.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.TB_CrackType.Location = New System.Drawing.Point(140, 105)
-        Me.TB_CrackType.Name = "TB_CrackType"
-        Me.TB_CrackType.Size = New System.Drawing.Size(322, 20)
-        Me.TB_CrackType.TabIndex = 3
         '
         'Lbl_CrackedFile
         '
@@ -199,15 +201,13 @@ Partial Class Main
         Me.Btn_Create.Text = "Create CrackApplier"
         Me.Btn_Create.UseVisualStyleBackColor = True
         '
-        'CheckBox1
+        'CB_CrackType
         '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(213, 156)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(58, 17)
-        Me.CheckBox1.TabIndex = 81
-        Me.CheckBox1.Text = "Inject?"
-        Me.CheckBox1.UseVisualStyleBackColor = True
+        Me.CB_CrackType.FormattingEnabled = True
+        Me.CB_CrackType.Location = New System.Drawing.Point(140, 104)
+        Me.CB_CrackType.Name = "CB_CrackType"
+        Me.CB_CrackType.Size = New System.Drawing.Size(322, 21)
+        Me.CB_CrackType.TabIndex = 6
         '
         'Main
         '
@@ -239,7 +239,6 @@ Partial Class Main
     Friend WithEvents Lbl_InstallPath As Label
     Friend WithEvents TB_InstallPath As TextBox
     Friend WithEvents Lbl_CrackType As Label
-    Friend WithEvents TB_CrackType As TextBox
     Friend WithEvents Lbl_CrackedFile As Label
     Friend WithEvents TB_CrackedFile As TextBox
     Friend WithEvents Lbl_CrackName As Label
@@ -249,4 +248,5 @@ Partial Class Main
     Friend WithEvents GB_Options As GroupBox
     Friend WithEvents Btn_Create As Button
     Friend WithEvents CheckBox1 As CheckBox
+    Friend WithEvents CB_CrackType As ComboBox
 End Class
