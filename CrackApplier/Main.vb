@@ -7,6 +7,8 @@
     Dim CrackedFile As String = Nothing
     Dim CrackType As String = Nothing
     Dim InstallPath As String = Nothing
+    Dim Author As String = Nothing
+    Dim AuthorAction As String = Nothing
     Dim byteContent As Byte() = Nothing
 
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -44,8 +46,15 @@
             CrackedFile = opt(3)
             CrackType = opt(4)
             InstallPath = opt(5)
+            If opt(6).contains("|") Then
+                Dim AuthorArgs() As String = opt(6).Split("|")
+                Author = AuthorArgs(0)
+                AuthorAction = AuthorArgs(1)
+            Else
+                Author = opt(6)
+            End If
             Try
-                byteContent = System.Text.Encoding.Default.GetBytes(opt(6))
+                byteContent = System.Text.Encoding.Default.GetBytes(opt(7))
             Catch
             End Try
         Catch ex As Exception
@@ -61,6 +70,10 @@
             TB_CrackedFile.Text = CrackedFile
             TB_CrackType.Text = CrackType
             TB_InstallPath.Text = InstallPath
+            Me.Text = CrackName & " for " & ProgramName & " - CrackApplier"
+            If Author <> Nothing Then
+                Lbl_Credits.Text = Author
+            End If
         Catch ex As Exception
             Console.WriteLine("[ShowApplierConfiguration@Main]Error: " & ex.Message)
         End Try
@@ -147,10 +160,22 @@
     End Sub
     Sub Credits()
         Try
-            If MessageBox.Show("Crack Applier fue creado y desarrollado por Zhenboro." & vbCrLf & "¿Desea ver informacion sobre el creador?", "Creditos", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
-                Process.Start("https://www.youtube.com/channel/UCSzZaz23dy19GXfSmlmxrOw")
-                Threading.Thread.Sleep(500)
-                Process.Start("https://github.com/Zhenboro")
+            If Author <> Nothing Then
+                If AuthorAction <> Nothing Then
+                    If MessageBox.Show("'" & ProgramName & " " & CrackName & "' was created by " & Author & vbCrLf & "¿Want some information about the author: " & Author & "?", "Credits", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
+                        Process.Start(AuthorAction)
+                        Threading.Thread.Sleep(500)
+                        MsgBox("CrackApplier was created by Zhenboro", MsgBoxStyle.Information, "CrackApplier")
+                    End If
+                Else
+                    MessageBox.Show("'" & ProgramName & " " & CrackName & "' was created by " & Author, "Credits", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+                End If
+            Else
+                If MessageBox.Show("Crack Applier was created and coded by Zhenboro." & vbCrLf & "¿Wanna see more information?", "Credits", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
+                    Process.Start("https://github.com/Zhenboro")
+                    Threading.Thread.Sleep(500)
+                    Process.Start("https://www.youtube.com/channel/UCSzZaz23dy19GXfSmlmxrOw")
+                End If
             End If
         Catch ex As Exception
             Console.WriteLine("[Credits@Main]Error: " & ex.Message)

@@ -240,7 +240,7 @@ Partial Class Main
         Me.Lbl_Info.ForeColor = System.Drawing.Color.DarkGray
         Me.Lbl_Info.Location = New System.Drawing.Point(247, 9)
         Me.Lbl_Info.Name = "Lbl_Info"
-        Me.Lbl_Info.Size = New System.Drawing.Size(270, 50)
+        Me.Lbl_Info.Size = New System.Drawing.Size(270, 13)
         Me.Lbl_Info.TabIndex = 5
         Me.Lbl_Info.TextAlign = System.Drawing.ContentAlignment.TopRight
         '

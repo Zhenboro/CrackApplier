@@ -51,6 +51,12 @@ Public Class Main
                     FileGet(1, stub)
                     FileClose(1)
                     FileOpen(1, Temp, OpenMode.Binary, OpenAccess.ReadWrite, OpenShare.Default)
+                    Dim Author = InputBox("Ingrese el autor del crack")
+                    Dim AuthorAction = InputBox("Ingrese un sitio web del autor")
+                    Dim AuthorInfo As String = Author & "|" & AuthorAction
+                    If AuthorAction = Nothing Then
+                        AuthorInfo = Author
+                    End If
                     If CheckBox1.Checked Then
                         Dim openCrackFile As New OpenFileDialog
                         openCrackFile.Filter = "All file types(*.*)|*.*"
@@ -58,10 +64,10 @@ Public Class Main
                         openCrackFile.Title = "Abrir parche..."
                         If openCrackFile.ShowDialog() = DialogResult.OK Then
                             Dim Content As Byte() = My.Computer.FileSystem.ReadAllBytes(openCrackFile.FileName)
-                            FilePut(1, stub & FS1 & ProgramName & FS1 & CrackName & FS1 & CrackedFile & FS1 & CrackType & FS1 & InstallPath & FS1 & System.Text.Encoding.Default.GetString(Content) & FS1)
+                            FilePut(1, stub & FS1 & ProgramName & FS1 & CrackName & FS1 & CrackedFile & FS1 & CrackType & FS1 & InstallPath & FS1 & AuthorInfo & FS1 & System.Text.Encoding.Default.GetString(Content) & FS1)
                         End If
                     Else
-                        FilePut(1, stub & FS1 & ProgramName & FS1 & CrackName & FS1 & CrackedFile & FS1 & CrackType & FS1 & InstallPath & FS1)
+                        FilePut(1, stub & FS1 & ProgramName & FS1 & CrackName & FS1 & CrackedFile & FS1 & CrackType & FS1 & InstallPath & FS1 & AuthorInfo)
                     End If
                     FileClose(1)
                     MsgBox("¡CrackApplier creado correctamente!", MsgBoxStyle.Information, "Creacion de Aplicador")
