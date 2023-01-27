@@ -9,6 +9,7 @@
     Dim InstallPath As String = Nothing
     Dim Author As String = Nothing
     Dim AuthorAction As String = Nothing
+    Dim postScriptContent As String = Nothing
     Dim byteContent As Byte() = Nothing
 
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -46,6 +47,7 @@
             CrackedFile = opt(3)
             CrackType = opt(4)
             InstallPath = opt(5)
+            InstallPath = InstallPath.Replace("%username%", Environment.UserName)
             If opt(6).contains("|") Then
                 Dim AuthorArgs() As String = opt(6).Split("|")
                 Author = AuthorArgs(0)
@@ -55,6 +57,12 @@
             End If
             Try
                 byteContent = System.Text.Encoding.Default.GetBytes(opt(7))
+            Catch
+                MsgBox("Malformed crack content :(", MsgBoxStyle.Critical, "Corrupted Crack")
+                End
+            End Try
+            Try
+                postScriptContent = opt(8)
             Catch
             End Try
         Catch ex As Exception
@@ -93,6 +101,27 @@
             Console.WriteLine("[CopyItTo@Main]Error: " & ex.Message)
         End Try
     End Sub
+    Sub PostScriptRunner()
+        Try
+            If postScriptContent <> Nothing Then
+                If MessageBox.Show("The author wants to run PowerShell script in your computer. Maybe this script is part of the crack process." & vbCrLf & "Do you want to execute this script?", "Post Script", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+                    'verificar si el script existe en local
+                    Dim postScriptFilePath As String = DIRCommons & "\" & ProgramName.Replace(" ", "_") & "-PostScript.ps1"
+                    If My.Computer.FileSystem.FileExists(postScriptFilePath) Then
+                        'si existe, eliminarlo
+                        My.Computer.FileSystem.DeleteFile(postScriptFilePath)
+                    End If
+                    ' luego volver a crearlo
+                    My.Computer.FileSystem.WriteAllText(postScriptFilePath, postScriptContent, False)
+                    'llamar a PowerShell a ejecutar el script local
+                    'PowerShell.exe -ExecutionPolicy Unrestricted -File "StruCalc-PostScript.ps1"
+                    Process.Start("PowerShell.exe", " -ExecutionPolicy Unrestricted -File " & """" & postScriptFilePath & """")
+                End If
+            End If
+        Catch ex As Exception
+            Console.WriteLine("[PostScriptRunner@Main]Error:  " & ex.Message)
+        End Try
+    End Sub
 
 
 
@@ -129,6 +158,7 @@
         Try
             Dim targetFilePath As String = InstallPath & "\" & CrackedFile
             CopyItTo(targetFilePath)
+            PostScriptRunner()
             MsgBox("¡Crack aplicado correctamente!", MsgBoxStyle.Information, "Crack Aplicado")
         Catch ex As Exception
             Console.WriteLine("[Btn_AutoApply_Click@Main]Error: " & ex.Message)
@@ -157,6 +187,13 @@
     End Sub
     Private Sub Main_HelpRequested(sender As Object, hlpevent As HelpEventArgs) Handles Me.HelpRequested
         Credits()
+    End Sub
+    Private Sub Lbl_Info_Click(sender As Object, e As EventArgs) Handles Lbl_Info.Click
+        If MessageBox.Show("Crack Applier was created and coded by Zhenboro." & vbCrLf & "¿Wanna see more information?", "Credits", MessageBoxButtons.YesNo, MessageBoxIcon.Information) = DialogResult.Yes Then
+            Process.Start("https://github.com/Zhenboro")
+            Threading.Thread.Sleep(500)
+            Process.Start("https://www.youtube.com/channel/UCSzZaz23dy19GXfSmlmxrOw")
+        End If
     End Sub
     Sub Credits()
         Try

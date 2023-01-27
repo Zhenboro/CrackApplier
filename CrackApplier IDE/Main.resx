@@ -117,4 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="RichTextBox1.Text" xml:space="preserve">
+    <value>function AddToLog {
+    param (
+        [string]$contentMsg
+    )
+    Write-Host $contentMsg
+    Start-Sleep -Seconds 1.5
+}
+AddToLog "Starting..."
+
+
+
+AddToLog "Post Script finished!... You can now close this prompt"
+pause</value>
+  </data>
 </root>

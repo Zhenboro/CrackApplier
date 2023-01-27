@@ -49,6 +49,7 @@ Partial Class Main
         'TB_ProgramName
         '
         Me.TB_ProgramName.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.TB_ProgramName.Cursor = System.Windows.Forms.Cursors.Default
         Me.TB_ProgramName.Location = New System.Drawing.Point(140, 27)
         Me.TB_ProgramName.Name = "TB_ProgramName"
         Me.TB_ProgramName.ReadOnly = True
@@ -98,6 +99,7 @@ Partial Class Main
         'TB_InstallPath
         '
         Me.TB_InstallPath.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.TB_InstallPath.Cursor = System.Windows.Forms.Cursors.Default
         Me.TB_InstallPath.Location = New System.Drawing.Point(140, 131)
         Me.TB_InstallPath.Name = "TB_InstallPath"
         Me.TB_InstallPath.ReadOnly = True
@@ -119,6 +121,7 @@ Partial Class Main
         'TB_CrackType
         '
         Me.TB_CrackType.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.TB_CrackType.Cursor = System.Windows.Forms.Cursors.Default
         Me.TB_CrackType.Location = New System.Drawing.Point(140, 105)
         Me.TB_CrackType.Name = "TB_CrackType"
         Me.TB_CrackType.ReadOnly = True
@@ -140,6 +143,7 @@ Partial Class Main
         'TB_CrackedFile
         '
         Me.TB_CrackedFile.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.TB_CrackedFile.Cursor = System.Windows.Forms.Cursors.Default
         Me.TB_CrackedFile.Location = New System.Drawing.Point(140, 79)
         Me.TB_CrackedFile.Name = "TB_CrackedFile"
         Me.TB_CrackedFile.ReadOnly = True
@@ -162,6 +166,7 @@ Partial Class Main
         'TB_CrackName
         '
         Me.TB_CrackName.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.TB_CrackName.Cursor = System.Windows.Forms.Cursors.Default
         Me.TB_CrackName.Location = New System.Drawing.Point(140, 53)
         Me.TB_CrackName.Name = "TB_CrackName"
         Me.TB_CrackName.ReadOnly = True
@@ -195,6 +200,7 @@ Partial Class Main
         'Btn_AutoApply
         '
         Me.Btn_AutoApply.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Btn_AutoApply.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Btn_AutoApply.Location = New System.Drawing.Point(153, 23)
         Me.Btn_AutoApply.Name = "Btn_AutoApply"
         Me.Btn_AutoApply.Size = New System.Drawing.Size(191, 34)
@@ -206,6 +212,7 @@ Partial Class Main
         'Btn_ExtractCrack
         '
         Me.Btn_ExtractCrack.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Btn_ExtractCrack.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Btn_ExtractCrack.Location = New System.Drawing.Point(350, 23)
         Me.Btn_ExtractCrack.Name = "Btn_ExtractCrack"
         Me.Btn_ExtractCrack.Size = New System.Drawing.Size(130, 34)
@@ -217,6 +224,7 @@ Partial Class Main
         'Btn_OriginalBackup
         '
         Me.Btn_OriginalBackup.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Btn_OriginalBackup.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Btn_OriginalBackup.Location = New System.Drawing.Point(17, 23)
         Me.Btn_OriginalBackup.Name = "Btn_OriginalBackup"
         Me.Btn_OriginalBackup.Size = New System.Drawing.Size(130, 34)
@@ -227,6 +235,7 @@ Partial Class Main
         '
         'Lbl_Credits
         '
+        Me.Lbl_Credits.Cursor = System.Windows.Forms.Cursors.Help
         Me.Lbl_Credits.Location = New System.Drawing.Point(12, 335)
         Me.Lbl_Credits.Name = "Lbl_Credits"
         Me.Lbl_Credits.Size = New System.Drawing.Size(504, 37)
@@ -237,6 +246,7 @@ Partial Class Main
         '
         'Lbl_Info
         '
+        Me.Lbl_Info.Cursor = System.Windows.Forms.Cursors.Help
         Me.Lbl_Info.ForeColor = System.Drawing.Color.DarkGray
         Me.Lbl_Info.Location = New System.Drawing.Point(247, 9)
         Me.Lbl_Info.Name = "Lbl_Info"

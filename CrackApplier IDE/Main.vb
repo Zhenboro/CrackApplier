@@ -3,11 +3,16 @@ Public Class Main
 
     Dim DIRCommons As String = "C:\Users\" & Environment.UserName & "\AppData\Local\Zhenboro\CrackApplier"
 
+    Dim BinaryFilePath As String = "CrackApplier.exe"
+    Dim SaveBinaryFilePath As String = Nothing
+    Dim PatchedCrackFilePath As String = Nothing
+
     Dim ProgramName As String = Nothing
     Dim CrackName As String = Nothing
     Dim CrackedFile As String = Nothing
     Dim CrackType As String = Nothing
     Dim InstallPath As String = Nothing
+    Dim PostScriptContent As String = Nothing
 
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Lbl_Info.Text = "Version " & My.Application.Info.Version.ToString & " (" & Application.ProductVersion & ")"
@@ -25,34 +30,42 @@ Public Class Main
                 CrackedFile = TB_CrackedFile.Text
                 CrackType = CB_CrackType.Text
                 InstallPath = TB_InstallPath.Text
+                If CheckBox2.Checked Then
+                    PostScriptContent = RichTextBox1.Text
+                Else
+                    PostScriptContent = Nothing
+                End If
 
                 Dim OpenBinary As New OpenFileDialog
                 OpenBinary.Filter = "Executable file (*.exe)|*.exe"
                 OpenBinary.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
                 OpenBinary.Title = "Abrir binario..."
-                OpenBinary.FileName = "CrackApplier.exe"
+                OpenBinary.FileName = BinaryFilePath
                 If OpenBinary.ShowDialog() = DialogResult.OK Then
-                    Dim Temp As String = Nothing
+                    BinaryFilePath = OpenBinary.FileName
                     Dim SaveBinary As New SaveFileDialog
                     SaveBinary.Filter = "Executable file (*.exe)|*.exe"
                     SaveBinary.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
                     SaveBinary.Title = "Guardar binario..."
                     SaveBinary.OverwritePrompt = True
-                    SaveBinary.FileName = "CrackApplier for " & CrackName & ".exe"
+                    If SaveBinaryFilePath = Nothing Then
+                        SaveBinaryFilePath = "CrackApplier for " & CrackName & ".exe"
+                    End If
+                    SaveBinary.FileName = SaveBinaryFilePath
                     If SaveBinary.ShowDialog() = DialogResult.OK Then
-                        Temp = SaveBinary.FileName
+                        SaveBinaryFilePath = SaveBinary.FileName
                     End If
                     Dim stub As String
                     Const FS1 As String = "|CA|"
-                    Dim bytesEXE As Byte() = System.IO.File.ReadAllBytes(OpenBinary.FileName)
-                    File.WriteAllBytes(Temp, bytesEXE)
-                    FileOpen(1, Temp, OpenMode.Binary, OpenAccess.Read, OpenShare.Default)
+                    Dim bytesEXE As Byte() = System.IO.File.ReadAllBytes(BinaryFilePath)
+                    File.WriteAllBytes(SaveBinaryFilePath, bytesEXE)
+                    FileOpen(1, SaveBinaryFilePath, OpenMode.Binary, OpenAccess.Read, OpenShare.Default)
                     stub = Space(LOF(1))
                     FileGet(1, stub)
                     FileClose(1)
-                    FileOpen(1, Temp, OpenMode.Binary, OpenAccess.ReadWrite, OpenShare.Default)
-                    Dim Author = InputBox("Ingrese el autor del crack")
-                    Dim AuthorAction = InputBox("Ingrese un sitio web del autor")
+                    FileOpen(1, SaveBinaryFilePath, OpenMode.Binary, OpenAccess.ReadWrite, OpenShare.Default)
+                    Dim Author = TB_AuthorName.Text
+                    Dim AuthorAction = TB_AuthorWebsite.Text
                     Dim AuthorInfo As String = Author & "|" & AuthorAction
                     If AuthorAction = Nothing Then
                         AuthorInfo = Author
@@ -62,12 +75,28 @@ Public Class Main
                         openCrackFile.Filter = "All file types(*.*)|*.*"
                         openCrackFile.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
                         openCrackFile.Title = "Abrir parche..."
+                        openCrackFile.FileName = PatchedCrackFilePath
                         If openCrackFile.ShowDialog() = DialogResult.OK Then
-                            Dim Content As Byte() = My.Computer.FileSystem.ReadAllBytes(openCrackFile.FileName)
-                            FilePut(1, stub & FS1 & ProgramName & FS1 & CrackName & FS1 & CrackedFile & FS1 & CrackType & FS1 & InstallPath & FS1 & AuthorInfo & FS1 & System.Text.Encoding.Default.GetString(Content) & FS1)
+                            PatchedCrackFilePath = openCrackFile.FileName
+                            Dim Content As Byte() = My.Computer.FileSystem.ReadAllBytes(PatchedCrackFilePath)
+                            FilePut(1, stub & FS1 &
+                                    ProgramName & FS1 &
+                                    CrackName & FS1 &
+                                    CrackedFile & FS1 &
+                                    CrackType & FS1 &
+                                    InstallPath & FS1 &
+                                    AuthorInfo & FS1 &
+                                    System.Text.Encoding.Default.GetString(Content) & FS1 &
+                                    PostScriptContent & FS1)
                         End If
                     Else
-                        FilePut(1, stub & FS1 & ProgramName & FS1 & CrackName & FS1 & CrackedFile & FS1 & CrackType & FS1 & InstallPath & FS1 & AuthorInfo)
+                        FilePut(1, stub & FS1 &
+                                ProgramName & FS1 &
+                                CrackName & FS1 &
+                                CrackedFile & FS1 &
+                                CrackType & FS1 &
+                                InstallPath & FS1 &
+                                AuthorInfo)
                     End If
                     FileClose(1)
                     MsgBox("¡CrackApplier creado correctamente!", MsgBoxStyle.Information, "Creacion de Aplicador")
@@ -90,5 +119,9 @@ Public Class Main
         Catch ex As Exception
             Console.WriteLine("[AddTypes@Main]Error: " & ex.Message)
         End Try
+    End Sub
+
+    Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox2.CheckedChanged
+        GroupBox1.Enabled = CheckBox2.Checked
     End Sub
 End Class
